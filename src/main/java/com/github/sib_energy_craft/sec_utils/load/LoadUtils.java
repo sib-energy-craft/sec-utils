@@ -8,6 +8,7 @@ import org.reflections.scanners.Scanners;
 import org.reflections.util.ConfigurationBuilder;
 
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * @since 0.0.3
@@ -16,6 +17,21 @@ import java.util.Set;
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class LoadUtils {
+
+
+    /**
+     * Load all mod registrars in package of root class<br/>
+     * Method handle all exceptions due to no app crash on mod loading
+     *
+     * @param root root class
+     * @param mod mod code for logs
+     * @see ModRegistrar mod registrar
+     */
+    public static void load(Class<?> root, String mod) {
+        var classLoader = root.getClassLoader();
+        var packageName = root.getPackageName();
+        load(classLoader, mod, packageName);
+    }
 
     /**
      * Load all mod registrars in passed package<br/>
@@ -49,9 +65,14 @@ public final class LoadUtils {
     }
 
     private static Set<Class<? extends ModRegistrar>> findAllRegistrars(ClassLoader classLoader, String packageName) {
+        var pattern = Pattern.compile("^" + packageName + "\\.([a-zA-Z0-9]+).class$");
         var configurationBuilder = ConfigurationBuilder.build()
                 .forPackages(packageName)
                 .addClassLoaders(classLoader)
+                .filterInputsBy(it -> {
+                    var matcher = pattern.matcher(it);
+                    return matcher.find();
+                })
                 .addScanners(Scanners.SubTypes);
 
         var reflections = new Reflections(configurationBuilder);

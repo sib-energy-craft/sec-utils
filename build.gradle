@@ -2,6 +2,7 @@ plugins {
     id 'fabric-loom' version '1.1-SNAPSHOT'
     id 'maven-publish'
     id 'java'
+    id 'jacoco'
 }
 
 version = project.mod_version
@@ -25,7 +26,11 @@ dependencies {
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    implementation "org.reflections:reflections:${reflections_version}"
+    implementation "org.reflections:reflections:${project.reflections_version}"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${project.junit_version}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${project.junit_version}"
+    testImplementation "org.mockito:mockito-core:${project.mockito_version}"
 }
 
 processResources {
@@ -95,4 +100,28 @@ publishing {
             from(components.java)
         }
     }
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacoco {
+    toolVersion = "0.8.8"
+    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        csv.required = true
+        html.required = true
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
+}
+
+jacocoTestReport {
+    dependsOn test
 }
