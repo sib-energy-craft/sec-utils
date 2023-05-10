@@ -10,7 +10,6 @@ import static org.mockito.Mockito.mock;
 
 /**
  * @author sibmaks
- * @since 2023-04-28
  */
 class IdentifiedTest {
 

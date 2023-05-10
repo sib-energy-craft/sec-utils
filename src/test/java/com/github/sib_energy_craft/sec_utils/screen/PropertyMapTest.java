@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author sibmaks
- * @since 2023-04-28
  */
 class PropertyMapTest {
 

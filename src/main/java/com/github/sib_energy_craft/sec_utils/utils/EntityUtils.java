@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * @author sibmaks
- * Created at 19-12-2022
+ * @since 0.0.1
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class EntityUtils {

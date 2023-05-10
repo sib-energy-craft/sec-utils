@@ -76,8 +76,8 @@ public final class ItemUtils {
      * @param block identified and registered block
      * @return registered item
      */
-    public static Item registerBlockItem(@NotNull ItemGroup itemGroup,
-                                         @NotNull Identified<? extends Block> block) {
+    public static BlockItem registerBlockItem(@NotNull ItemGroup itemGroup,
+                                              @NotNull Identified<? extends Block> block) {
         var entity = block.entity();
         var identifier = block.identifier();
         var settings = new Item.Settings();
