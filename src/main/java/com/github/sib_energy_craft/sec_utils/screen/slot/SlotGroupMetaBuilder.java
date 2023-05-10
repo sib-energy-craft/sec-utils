@@ -12,10 +12,10 @@ import org.jetbrains.annotations.NotNull;
  */
 public final class SlotGroupMetaBuilder {
     private final SlotType slotType;
-    private int minGlobalIndex;
-    private int maxGlobalIndex;
-    private int minLocalIndex;
-    private int maxLocalIndex;
+    private int minGlobalIndex = Integer.MAX_VALUE;
+    private int maxGlobalIndex = Integer.MIN_VALUE;
+    private int minLocalIndex = Integer.MAX_VALUE;
+    private int maxLocalIndex = Integer.MIN_VALUE;
     private final BiMap<Integer, Integer> globalToLocalIndex;
 
     private SlotGroupMetaBuilder(@NotNull SlotType slotType) {
