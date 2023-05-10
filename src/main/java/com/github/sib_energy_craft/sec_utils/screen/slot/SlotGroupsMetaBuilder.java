@@ -13,11 +13,11 @@ import java.util.Map;
  */
 public final class SlotGroupsMetaBuilder {
     private final Map<Integer, SlotGroupMeta> globalSlotGroupMetas;
-    private final Map<SlotType, Map<Integer, Integer>> slotTypeToGlobalIndex;
+    private final Map<SlotType, SlotGroupMeta> slotTypeToSlotGroupMetas;
 
     private SlotGroupsMetaBuilder() {
         this.globalSlotGroupMetas = new HashMap<>();
-        this.slotTypeToGlobalIndex = new HashMap<>();
+        this.slotTypeToSlotGroupMetas = new HashMap<>();
     }
 
     /**
@@ -36,15 +36,12 @@ public final class SlotGroupsMetaBuilder {
      * @return self-reference
      */
     public @NotNull SlotGroupsMetaBuilder add(@NotNull SlotGroupMeta slotGroupMeta) {
-        var localToGlobals = new HashMap<Integer, Integer>();
         var globalToLocalIndex = slotGroupMeta.getGlobalToLocalIndex();
         for (var entry : globalToLocalIndex.entrySet()) {
             var global = entry.getKey();
-            var local = entry.getValue();
-            localToGlobals.put(local, global);
             this.globalSlotGroupMetas.put(global, slotGroupMeta);
         }
-        this.slotTypeToGlobalIndex.put(slotGroupMeta.getSlotType(), localToGlobals);
+        this.slotTypeToSlotGroupMetas.put(slotGroupMeta.getSlotType(), slotGroupMeta);
         return this;
     }
 
@@ -55,7 +52,7 @@ public final class SlotGroupsMetaBuilder {
     public @NotNull SlotGroupsMeta build() {
         return new SlotGroupsMeta(
                 globalSlotGroupMetas,
-                slotTypeToGlobalIndex
+                slotTypeToSlotGroupMetas
         );
     }
 }

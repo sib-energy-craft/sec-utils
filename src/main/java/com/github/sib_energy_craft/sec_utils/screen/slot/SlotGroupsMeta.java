@@ -15,7 +15,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class SlotGroupsMeta {
     private final Map<Integer, SlotGroupMeta> globalSlotGroupMetas;
-    private final Map<SlotType, Map<Integer, Integer>> slotTypeToGlobalIndex;
+    private final Map<SlotType, SlotGroupMeta> slotTypeToGlobalIndex;
 
     /**
      * Get slot group meta in formation by global slot index
@@ -51,10 +51,20 @@ public class SlotGroupsMeta {
      */
     @Nullable
     public Integer getGlobalIndexByLocal(@NotNull SlotType slotType, int index) {
-        var localIndexesToGlobal = slotTypeToGlobalIndex.get(slotType);
-        if(localIndexesToGlobal == null) {
+        var slotGroupMeta = slotTypeToGlobalIndex.get(slotType);
+        if(slotGroupMeta == null) {
             return null;
         }
-        return localIndexesToGlobal.get(index);
+        return slotGroupMeta.getGlobalIndex(index);
+    }
+
+    /**
+     * Get slot group meta by slot type
+     *
+     * @return global slot index or null
+     */
+    @Nullable
+    public SlotGroupMeta getSlotGroupMeta(@NotNull SlotType slotType) {
+        return slotTypeToGlobalIndex.get(slotType);
     }
 }
