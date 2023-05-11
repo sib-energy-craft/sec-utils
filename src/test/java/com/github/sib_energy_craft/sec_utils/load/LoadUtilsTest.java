@@ -16,7 +16,7 @@ class LoadUtilsTest {
     @Test
     void testGetRegistrar() {
         String mod = UUID.randomUUID().toString();
-        boolean loaded = LoadUtils.load(LoadUtilsTest.class, mod);
+        boolean loaded = LoadUtils.tryLoad(LoadUtilsTest.class, mod);
         assertTrue(loaded);
 
         assertTrue(StubRegistrar.initialized);

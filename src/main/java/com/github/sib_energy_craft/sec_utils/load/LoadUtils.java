@@ -23,12 +23,25 @@ public final class LoadUtils {
      *
      * @param root root class
      * @param mod mod code for logs
+     * @return true - loaded without error, false - otherwise
      * @see ModRegistrar mod registrar
      */
-    public static boolean load(Class<?> root, String mod) {
+    public static boolean tryLoad(Class<?> root, String mod) {
         var classLoader = root.getClassLoader();
         var packageName = root.getPackageName();
-        return load(classLoader, mod, packageName);
+        return tryLoad(classLoader, mod, packageName);
+    }
+
+    /**
+     * Load all mod registrars in package of root class<br/>
+     * Method handle all exceptions due to no app crash on mod loading
+     *
+     * @param root root class
+     * @param mod mod code for logs
+     * @see ModRegistrar mod registrar
+     */
+    public static void load(Class<?> root, String mod) {
+        tryLoad(root, mod);
     }
 
     /**
@@ -41,7 +54,7 @@ public final class LoadUtils {
      * @return true - loaded without error, false - otherwise
      * @see ModRegistrar mod registrar
      */
-    public static boolean load(ClassLoader classLoader, String mod, String packageName) {
+    public static boolean tryLoad(ClassLoader classLoader, String mod, String packageName) {
         log.debug("Load: {}", mod);
         boolean errorHappened = false;
         try {
@@ -65,6 +78,19 @@ public final class LoadUtils {
             errorHappened = true;
         }
         return !errorHappened;
+    }
+
+    /**
+     * Load all mod registrars in passed package<br/>
+     * Method handle all exceptions due to no app crash on mod loading
+     *
+     * @param classLoader class load for registrar loading
+     * @param mod mod code for logs
+     * @param packageName package path
+     * @see ModRegistrar mod registrar
+     */
+    public static void load(ClassLoader classLoader, String mod, String packageName) {
+        tryLoad(classLoader, mod, packageName);
     }
 
     private static Set<Class<ModRegistrar>> findAllRegistrars(ClassLoader classLoader, String packageName) throws IOException {
