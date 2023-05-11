@@ -4,12 +4,9 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.Collections;
-import java.util.Objects;
+import java.io.IOException;
+import java.lang.reflect.Modifier;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @since 0.0.3
@@ -28,10 +25,10 @@ public final class LoadUtils {
      * @param mod mod code for logs
      * @see ModRegistrar mod registrar
      */
-    public static void load(Class<?> root, String mod) {
+    public static boolean load(Class<?> root, String mod) {
         var classLoader = root.getClassLoader();
         var packageName = root.getPackageName();
-        load(classLoader, mod, packageName);
+        return load(classLoader, mod, packageName);
     }
 
     /**
@@ -41,10 +38,12 @@ public final class LoadUtils {
      * @param classLoader class load for registrar loading
      * @param mod mod code for logs
      * @param packageName package path
+     * @return true - loaded without error, false - otherwise
      * @see ModRegistrar mod registrar
      */
-    public static void load(ClassLoader classLoader, String mod, String packageName) {
+    public static boolean load(ClassLoader classLoader, String mod, String packageName) {
         log.debug("Load: {}", mod);
+        boolean errorHappened = false;
         try {
             var registrars = findAllRegistrars(classLoader, packageName);
             for (var type : registrars) {
@@ -56,39 +55,22 @@ public final class LoadUtils {
                 } catch (Exception e) {
                     // don't crash app in case if registrar creation failed
                     log.error("Can't load registrar %s mod %s".formatted(type.getName(), mod), e);
+                    errorHappened = true;
                 }
             }
             log.debug("Loaded: {}", mod);
         } catch (Exception e) {
             // don't crash app in case if mod load failed
             log.error("Can't load mod %s".formatted(mod), e);
+            errorHappened = true;
         }
+        return !errorHappened;
     }
 
-    private static Set<Class<? extends ModRegistrar>> findAllRegistrars(ClassLoader classLoader, String packageName) {
-        var stream = classLoader.getResourceAsStream(packageName.replace('.', '/'));
-        if(stream == null) {
-            return Collections.emptySet();
-        }
-        var reader = new BufferedReader(new InputStreamReader(stream));
-        return reader.lines()
-                .filter(it -> it.endsWith(".class"))
-                .map(it -> getClass(it, packageName))
-                .filter(Objects::nonNull)
-                .collect(Collectors.toSet());
-    }
-
-    private static Class<? extends ModRegistrar> getClass(String className, String packageName) {
-        try {
-            var type = Class.forName(packageName + "."
-                    + className.substring(0, className.lastIndexOf('.')));
-            if(ModRegistrar.class.isAssignableFrom(type)) {
-                return (Class<? extends ModRegistrar>) type;
-            }
-        } catch (ClassNotFoundException e) {
-            log.error("Error get class", e);
-        }
-        return null;
+    private static Set<Class<ModRegistrar>> findAllRegistrars(ClassLoader classLoader, String packageName) throws IOException {
+        return ReflectionUtils.getClasses(classLoader, packageName, it ->
+                !it.isInterface() && !Modifier.isAbstract(it.getModifiers()) &&
+                ModRegistrar.class.isAssignableFrom(it));
     }
 
 }

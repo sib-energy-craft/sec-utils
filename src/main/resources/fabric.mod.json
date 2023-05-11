@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "sec-sec-utils",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "name": "SibEnergyCraft - Common Utils",
   "authors": [
     "sibmaks"
