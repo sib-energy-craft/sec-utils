@@ -3,12 +3,13 @@ package com.github.sib_energy_craft.sec_utils.load;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.reflections.Reflections;
-import org.reflections.scanners.Scanners;
-import org.reflections.util.ConfigurationBuilder;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Collections;
+import java.util.Objects;
 import java.util.Set;
-import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * @since 0.0.3
@@ -65,18 +66,29 @@ public final class LoadUtils {
     }
 
     private static Set<Class<? extends ModRegistrar>> findAllRegistrars(ClassLoader classLoader, String packageName) {
-        var pattern = Pattern.compile("^" + packageName + "\\.([a-zA-Z0-9]+).class$");
-        var configurationBuilder = ConfigurationBuilder.build()
-                .forPackages(packageName)
-                .addClassLoaders(classLoader)
-                .filterInputsBy(it -> {
-                    var matcher = pattern.matcher(it);
-                    return matcher.find();
-                })
-                .addScanners(Scanners.SubTypes);
+        var stream = classLoader.getResourceAsStream(packageName.replace('.', '/'));
+        if(stream == null) {
+            return Collections.emptySet();
+        }
+        var reader = new BufferedReader(new InputStreamReader(stream));
+        return reader.lines()
+                .filter(it -> it.endsWith(".class"))
+                .map(it -> getClass(it, packageName))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+    }
 
-        var reflections = new Reflections(configurationBuilder);
-        return reflections.getSubTypesOf(ModRegistrar.class);
+    private static Class<? extends ModRegistrar> getClass(String className, String packageName) {
+        try {
+            var type = Class.forName(packageName + "."
+                    + className.substring(0, className.lastIndexOf('.')));
+            if(ModRegistrar.class.isAssignableFrom(type)) {
+                return (Class<? extends ModRegistrar>) type;
+            }
+        } catch (ClassNotFoundException e) {
+            log.error("Error get class", e);
+        }
+        return null;
     }
 
 }

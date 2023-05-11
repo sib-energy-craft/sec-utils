@@ -26,8 +26,6 @@ dependencies {
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    include implementation("org.reflections:reflections:${project.reflections_version}")
-
     testImplementation "org.junit.jupiter:junit-jupiter-api:${project.junit_version}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${project.junit_version}"
     testImplementation "org.mockito:mockito-core:${project.mockito_version}"
