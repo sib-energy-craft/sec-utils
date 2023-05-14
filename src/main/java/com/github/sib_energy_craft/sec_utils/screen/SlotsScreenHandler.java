@@ -13,13 +13,10 @@ import org.jetbrains.annotations.Nullable;
  * @since 0.0.14
  */
 public abstract class SlotsScreenHandler extends ScreenHandler {
-    protected final SlotGroupsMeta slotGroupsMeta;
 
     protected SlotsScreenHandler(@Nullable ScreenHandlerType<?> type,
-                                 int syncId,
-                                 @NotNull SlotGroupsMeta slotGroupsMeta) {
+                                 int syncId) {
         super(type, syncId);
-        this.slotGroupsMeta = slotGroupsMeta;
     }
 
     /**
@@ -30,14 +27,15 @@ public abstract class SlotsScreenHandler extends ScreenHandler {
      * @param otherwise other slot types to insert
      * @return true - slot was insert, false - otherwise
      */
-    public boolean insertItem(@NotNull ItemStack slotStack,
+    public boolean insertItem(@NotNull SlotGroupsMeta slotGroupsMeta,
+                              @NotNull ItemStack slotStack,
                               @NotNull SlotType to,
                               @NotNull SlotType ... otherwise) {
-        if(insertItem(slotStack, to)) {
+        if(insertItem(slotGroupsMeta, slotStack, to)) {
             return true;
         }
         for (var slotType : otherwise) {
-            if(insertItem(slotStack, slotType)) {
+            if(insertItem(slotGroupsMeta, slotStack, slotType)) {
                 return true;
             }
         }
@@ -51,9 +49,10 @@ public abstract class SlotsScreenHandler extends ScreenHandler {
      * @param to slot type
      * @return true - slot was insert, false - otherwise
      */
-    public boolean insertItem(@NotNull ItemStack slotStack,
+    public boolean insertItem(@NotNull SlotGroupsMeta slotGroupsMeta,
+                              @NotNull ItemStack slotStack,
                               @NotNull SlotType to) {
-        var slotGroupMeta = this.slotGroupsMeta.getSlotGroupMeta(to);
+        var slotGroupMeta = slotGroupsMeta.getSlotGroupMeta(to);
         if(slotGroupMeta == null) {
             return false;
         }
