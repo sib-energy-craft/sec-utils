@@ -25,18 +25,29 @@ public final class ScreenUtils {
      *
      * @param identifier screen handler identifier
      * @param factory screen factory
-     * @param provider handled screen provider
      * @return registered screen handler
      * @param <T> type of screen handler
-     * @param <S> type of screen & provided scren
      */
-    public static <T extends ScreenHandler, S extends Screen & ScreenHandlerProvider<T>>
-        ScreenHandlerType<T> register(@NotNull Identifier identifier,
-                                      @NotNull ExtendedScreenHandlerType.ExtendedFactory<T> factory,
-                                      @NotNull HandledScreens.Provider<T, S> provider) {
+    public static <T extends ScreenHandler> @NotNull ScreenHandlerType<T> registerHandler(
+            @NotNull Identifier identifier,
+            @NotNull ExtendedScreenHandlerType.ExtendedFactory<T> factory) {
         var type = new ExtendedScreenHandlerType<>(factory);
-        var register = Registry.register(Registries.SCREEN_HANDLER, identifier, type);
-        HandledScreens.register(register, provider);
-        return register;
+        return Registry.register(Registries.SCREEN_HANDLER, identifier, type);
+    }
+
+    /**
+     * Register screen handler in {@link Registries#SCREEN_HANDLER}
+     *
+     * @param screenHandlerType screen handler type
+     * @param provider handled screen provider
+     *
+     * @param <T> type of screen handler
+     * @param <S> type of screen & provided screen
+     * @since 0.0.16
+     */
+    public static <T extends ScreenHandler, S extends Screen & ScreenHandlerProvider<T>> void registerScreen(
+            @NotNull ScreenHandlerType<T> screenHandlerType,
+            @NotNull HandledScreens.Provider<T, S> provider) {
+        HandledScreens.register(screenHandlerType, provider);
     }
 }
