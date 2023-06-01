@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,12 +26,12 @@ public final class ItemUtils {
     /**
      * Build and register item in {@link Registries#ITEM}
      *
-     * @param itemGroup item group
+     * @param itemGroup item group registry key
      * @param block identified block
      * @param itemCreator item factory
      * @return registered item
      */
-    public static<B extends Block, R extends BlockItem> R register(@NotNull ItemGroup itemGroup,
+    public static<B extends Block, R extends BlockItem> R register(@NotNull RegistryKey<ItemGroup> itemGroup,
                                                                    @NotNull Identified<? extends B> block,
                                                                    @NotNull Function<B, R> itemCreator) {
         var entity = block.entity();
@@ -42,12 +43,12 @@ public final class ItemUtils {
     /**
      * Register item in {@link Registries#ITEM}
      *
-     * @param itemGroup item group
+     * @param itemGroup item group registry key
      * @param identifier item identifier
      * @param item item instance
      * @return registered item
      */
-    public static<T extends Item> T register(@NotNull ItemGroup itemGroup,
+    public static<T extends Item> T register(@NotNull RegistryKey<ItemGroup> itemGroup,
                                              @NotNull Identifier identifier,
                                              @NotNull T item) {
         ItemGroupEvents.modifyEntriesEvent(itemGroup).register(entries -> entries.add(item));
@@ -57,12 +58,12 @@ public final class ItemUtils {
     /**
      * Create and register item in {@link Registries#ITEM}
      *
-     * @param itemGroup item group
+     * @param itemGroup item group registry key
      * @param identifier item identifier
      * @param settings item settings
      * @return registered item
      */
-    public static Item register(@NotNull ItemGroup itemGroup,
+    public static Item register(@NotNull RegistryKey<ItemGroup> itemGroup,
                                 @NotNull Identifier identifier,
                                 @NotNull Item.Settings settings) {
         var item = new Item(settings);
@@ -72,11 +73,11 @@ public final class ItemUtils {
     /**
      * Register block item in {@link Registries#ITEM}
      *
-     * @param itemGroup item group
+     * @param itemGroup item group registry key
      * @param block identified and registered block
      * @return registered item
      */
-    public static BlockItem registerBlockItem(@NotNull ItemGroup itemGroup,
+    public static BlockItem registerBlockItem(@NotNull RegistryKey<ItemGroup> itemGroup,
                                               @NotNull Identified<? extends Block> block) {
         var entity = block.entity();
         var identifier = block.identifier();
