@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "sec-sec-utils",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "name": "SibEnergyCraft - Common Utils",
   "authors": [
     "sibmaks"
@@ -12,7 +12,7 @@
   "depends": {
     "fabricloader": ">=0.14.21",
     "fabric": "*",
-    "minecraft": "1.20-rc.1"
+    "minecraft": "1.20"
   },
   "mixins": [
     "sec.utils.mixins.json"
