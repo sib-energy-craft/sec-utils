@@ -10,9 +10,9 @@
   "license": "MIT",
   "environment": "*",
   "depends": {
-    "fabricloader": ">=0.14.21",
+    "fabricloader": ">=0.14.22",
     "fabric": "*",
-    "minecraft": "1.20"
+    "minecraft": "1.20.1"
   },
   "mixins": [
     "sec.utils.mixins.json"
