@@ -35,6 +35,7 @@ public final class BlockUtils {
      *
      * @param identifier block identifier
      * @param block block to register
+     * @param <T> block type
      * @return registered block
      */
     public static<T extends Block> Identified<T> register(@NotNull Identifier identifier,

@@ -46,6 +46,7 @@ public class SlotGroupsMeta {
     /**
      * Get global slot index by local index
      *
+     * @param slotType slot type
      * @param index local index
      * @return global slot index or null
      */
@@ -61,6 +62,7 @@ public class SlotGroupsMeta {
     /**
      * Get slot group meta by slot type
      *
+     * @param slotType slot type
      * @return global slot index or null
      */
     @Nullable

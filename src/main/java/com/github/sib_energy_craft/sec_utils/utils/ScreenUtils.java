@@ -42,7 +42,7 @@ public final class ScreenUtils {
      * @param provider handled screen provider
      *
      * @param <T> type of screen handler
-     * @param <S> type of screen & provided screen
+     * @param <S> type of screen and provided screen
      * @since 0.0.16
      */
     public static <T extends ScreenHandler, S extends Screen & ScreenHandlerProvider<T>> void registerScreen(

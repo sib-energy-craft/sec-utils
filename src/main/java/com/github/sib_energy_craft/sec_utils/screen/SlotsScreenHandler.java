@@ -22,6 +22,7 @@ public abstract class SlotsScreenHandler extends ScreenHandler {
     /**
      * Insert item into specific slot type or in otherwise one
      *
+     * @param slotGroupsMeta slot groups meta data
      * @param slotStack slot to insert
      * @param to most priority slot type
      * @param otherwise other slot types to insert
@@ -45,6 +46,7 @@ public abstract class SlotsScreenHandler extends ScreenHandler {
     /**
      * Insert item into specific slot type
      *
+     * @param slotGroupsMeta slot groups meta data
      * @param slotStack slot to insert
      * @param to slot type
      * @return true - slot was insert, false - otherwise

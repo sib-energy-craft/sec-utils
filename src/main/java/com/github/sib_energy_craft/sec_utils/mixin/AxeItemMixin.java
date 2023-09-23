@@ -25,6 +25,9 @@ import java.util.Optional;
 @Slf4j
 @Mixin(AxeItem.class)
 public class AxeItemMixin {
+    /**
+     * Stripped block static final field into {@link AxeItem}.<br/>
+     */
     @Mutable
     @Shadow @Final protected static Map<Block, Block> STRIPPED_BLOCKS;
 

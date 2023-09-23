@@ -29,6 +29,8 @@ public final class ItemUtils {
      * @param itemGroup item group registry key
      * @param block identified block
      * @param itemCreator item factory
+     * @param <B> block type
+     * @param <R> block item type
      * @return registered item
      */
     public static<B extends Block, R extends BlockItem> R register(@NotNull RegistryKey<ItemGroup> itemGroup,
@@ -46,6 +48,7 @@ public final class ItemUtils {
      * @param itemGroup item group registry key
      * @param identifier item identifier
      * @param item item instance
+     * @param <T> item type
      * @return registered item
      */
     public static<T extends Item> T register(@NotNull RegistryKey<ItemGroup> itemGroup,

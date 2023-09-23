@@ -57,7 +57,21 @@ public final class EntityUtils {
         return Registry.register(Registries.BLOCK_ENTITY_TYPE, identifier, energySupplierEntityType);
     }
 
+    /**
+     * Block entity factory
+     *
+     * @param <B> block type
+     * @param <E> block entity type
+     */
     public interface Factory<B extends Block, E extends BlockEntity> {
+        /**
+         * Factory method for block entity creation
+         *
+         * @param blockPos block position
+         * @param blockState block state
+         * @param block block
+         * @return instance of block entity
+         */
         E create(BlockPos blockPos, BlockState blockState, B block);
     }
 }
