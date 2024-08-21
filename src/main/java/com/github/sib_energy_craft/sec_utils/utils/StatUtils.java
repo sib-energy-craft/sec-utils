@@ -20,12 +20,12 @@ public final class StatUtils {
     /**
      * Register new stat into registry
      *
-     * @param id stat identification
+     * @param id        stat identification
      * @param formatter stat UI formatter
      * @return stat registered identifier
      */
     public static Identifier register(@NotNull String id, @NotNull StatFormatter formatter) {
-        var identifier = new Identifier(id);
+        var identifier = Identifier.of(id);
         Registry.register(Registries.CUSTOM_STAT, id, identifier);
         CUSTOM.getOrCreateStat(identifier, formatter);
         return identifier;

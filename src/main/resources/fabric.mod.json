@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "id": "sec-sec-utils",
-  "version": "0.0.22",
+  "id": "${mod_name}",
+  "version": "${mod_version}",
   "name": "SibEnergyCraft - Common Utils",
   "authors": [
     "sibmaks"
@@ -10,9 +10,9 @@
   "license": "MIT",
   "environment": "*",
   "depends": {
-    "fabricloader": ">=0.14.22",
+    "fabricloader": ">=${loader_version}",
     "fabric": "*",
-    "minecraft": "1.20.2"
+    "minecraft": "${minecraft_version}"
   },
   "mixins": [
     "sec.utils.mixins.json"

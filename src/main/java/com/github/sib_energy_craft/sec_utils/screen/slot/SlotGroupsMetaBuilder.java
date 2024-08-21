@@ -30,7 +30,7 @@ public final class SlotGroupsMetaBuilder {
     }
 
     /**
-     * Add group into collection
+     * Add a group into a collection
      *
      * @param slotGroupMeta slot group
      * @return self-reference

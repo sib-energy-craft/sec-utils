@@ -20,7 +20,7 @@ public abstract class SlotsScreenHandler extends ScreenHandler {
     }
 
     /**
-     * Insert item into specific slot type or in otherwise one
+     * Insert item into a specific slot type or in otherwise one
      *
      * @param slotGroupsMeta slot groups meta data
      * @param slotStack slot to insert

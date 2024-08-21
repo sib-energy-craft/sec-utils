@@ -1,6 +1,12 @@
 package com.github.sib_energy_craft.sec_utils.screen;
 
 /**
+ * Class define square screen and provide utility methods to handle user interaction.
+ *
+ * @param x      left corner
+ * @param y      top corner
+ * @param width  screen width
+ * @param height screen height
  * @author sibmaks
  * @since 0.0.18
  */
@@ -11,8 +17,8 @@ public record ScreenSquareArea(int x, int y, int width, int height) {
      *
      * @param xOffset x coordinate offset
      * @param yOffset y coordinate offset
-     * @param mouseX mouse x coordinate
-     * @param mouseY mouse y coordinate
+     * @param mouseX  mouse x coordinate
+     * @param mouseY  mouse y coordinate
      * @return true - mouse in area, false - otherwise
      */
     public boolean in(int xOffset, int yOffset, int mouseX, int mouseY) {
@@ -25,8 +31,8 @@ public record ScreenSquareArea(int x, int y, int width, int height) {
      *
      * @param xOffset x coordinate offset
      * @param yOffset y coordinate offset
-     * @param mouseX mouse x coordinate
-     * @param mouseY mouse y coordinate
+     * @param mouseX  mouse x coordinate
+     * @param mouseY  mouse y coordinate
      * @return true - mouse in area, false - otherwise
      */
     public boolean in(int xOffset, int yOffset, double mouseX, double mouseY) {
