@@ -53,7 +53,7 @@ public final class EntityUtils {
 
         var energySupplierEntityType = FabricBlockEntityTypeBuilder
                 .create(factory, entity)
-                .build(null);
+                .build();
 
         return Registry.register(Registries.BLOCK_ENTITY_TYPE, identifier, energySupplierEntityType);
     }
