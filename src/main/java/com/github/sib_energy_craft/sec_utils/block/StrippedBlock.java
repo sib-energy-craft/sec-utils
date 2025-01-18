@@ -4,6 +4,8 @@ import net.minecraft.block.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 /**
+ * Stripped block marker interface.
+ *
  * @author sibmaks
  * @since 0.0.17
  */
@@ -15,6 +17,7 @@ public interface StrippedBlock {
      * @param state base block state
      * @return stripped block state
      */
-    @NotNull BlockState getStrippedState(@NotNull BlockState state);
+    @NotNull
+    BlockState getStrippedState(@NotNull BlockState state);
 
 }

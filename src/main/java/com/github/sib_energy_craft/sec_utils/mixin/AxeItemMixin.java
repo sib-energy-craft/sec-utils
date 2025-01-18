@@ -19,6 +19,8 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
+ * {@link AxeItem} mixin. Add ability to extends Axe logic.
+ *
  * @author drobyshev-ma
  * @since 0.0.17
  */
@@ -32,7 +34,7 @@ public class AxeItemMixin {
     @Shadow @Final protected static Map<Block, Block> STRIPPED_BLOCKS;
 
     static {
-        Hooks.AxeItemClassInit = (value) -> AxeItemMixin.STRIPPED_BLOCKS = new ImmutableMap.Builder<Block, Block>()
+        Hooks.AxeItemClassInit = value -> AxeItemMixin.STRIPPED_BLOCKS = new ImmutableMap.Builder<Block, Block>()
                         .putAll(STRIPPED_BLOCKS)
                         .putAll(value)
                         .build();
@@ -43,7 +45,8 @@ public class AxeItemMixin {
                                   CallbackInfoReturnable<Optional<BlockState>> callbackInfoReturnable) {
         var strippedBlock = STRIPPED_BLOCKS.get(state.getBlock());
         if(strippedBlock instanceof StrippedBlock block) {
-            callbackInfoReturnable.setReturnValue(Optional.of(block.getStrippedState(state)));
+            var strippedState = block.getStrippedState(state);
+            callbackInfoReturnable.setReturnValue(Optional.of(strippedState));
         }
     }
 }
