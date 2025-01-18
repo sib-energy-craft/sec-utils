@@ -86,7 +86,9 @@ public final class ItemUtils {
                                               @NotNull Identified<? extends Block> block) {
         var entity = block.entity();
         var identifier = block.identifier();
-        var settings = new Item.Settings();
+        var settings = new Item.Settings()
+                .registryKey(keyOf(identifier))
+                .useBlockPrefixedTranslationKey();
         var item = new BlockItem(entity, settings);
         return register(itemGroup, identifier, item);
     }
