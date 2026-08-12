@@ -19,7 +19,7 @@ class PropertyMapTest {
         var propertyMap = new PropertyMap<>(FixtureProperties.class);
 
         propertyMap.add(FixtureProperties.KEY_A, () -> keyAValue);
-        assertEquals(1, propertyMap.size());
+        assertEquals(1, propertyMap.getCount());
 
         int actual = propertyMap.get(FixtureProperties.KEY_A.ordinal());
         assertEquals(keyAValue, actual);
@@ -40,7 +40,7 @@ class PropertyMapTest {
         var propertyMap = new PropertyMap<>(FixtureProperties.class);
 
         propertyMap.add(FixtureProperties.KEY_A, keyAValue::get, keyAValue::set);
-        assertEquals(1, propertyMap.size());
+        assertEquals(1, propertyMap.getCount());
 
         int actual = propertyMap.get(FixtureProperties.KEY_A.ordinal());
         assertEquals(startValue, actual);

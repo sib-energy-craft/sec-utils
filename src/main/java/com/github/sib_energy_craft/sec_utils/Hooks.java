@@ -2,8 +2,7 @@ package com.github.sib_energy_craft.sec_utils;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import net.minecraft.block.Block;
-
+import net.minecraft.world.level.block.Block;
 import java.util.Map;
 import java.util.function.Consumer;
 

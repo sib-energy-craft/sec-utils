@@ -3,15 +3,15 @@ package com.github.sib_energy_craft.sec_utils.utils;
 import com.github.sib_energy_craft.sec_utils.common.Identified;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.ExperienceDroppingBlock;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.intprovider.IntProvider;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DropExperienceBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -22,21 +22,21 @@ import org.jetbrains.annotations.NotNull;
 public final class BlockUtils {
 
     /**
-     * Create and register block into {@link Registries#BLOCK} registry.
+     * Create and register block into {@link BuiltInRegistries#BLOCK} registry.
      *
      * @param identifier block identifier
      * @param settings   block settings
      * @return registered block
      */
     public static Identified<Block> register(@NotNull Identifier identifier,
-                                             @NotNull AbstractBlock.Settings settings) {
-        settings.registryKey(keyOf(identifier));
+                                             @NotNull BlockBehaviour.Properties settings) {
+        settings.setId(keyOf(identifier));
         var block = new Block(settings);
         return register(identifier, block);
     }
 
     /**
-     * Create and register experience dropping block into {@link Registries#BLOCK} registry.
+     * Create and register experience dropping block into {@link BuiltInRegistries#BLOCK} registry.
      *
      * @param identifier         block identifier
      * @param experienceProvider experience provider
@@ -45,14 +45,14 @@ public final class BlockUtils {
      */
     public static Identified<Block> registerExperienceDroppingBlock(@NotNull Identifier identifier,
                                                                     @NotNull IntProvider experienceProvider,
-                                                                    @NotNull AbstractBlock.Settings settings) {
-        settings.registryKey(keyOf(identifier));
-        var block = new ExperienceDroppingBlock(experienceProvider, settings);
+                                                                    @NotNull BlockBehaviour.Properties settings) {
+        settings.setId(keyOf(identifier));
+        var block = new DropExperienceBlock(experienceProvider, settings);
         return register(identifier, block);
     }
 
     /**
-     * Register block into {@link Registries#BLOCK} registry.
+     * Register block into {@link BuiltInRegistries#BLOCK} registry.
      *
      * @param identifier block identifier
      * @param block      block to register
@@ -61,7 +61,7 @@ public final class BlockUtils {
      */
     public static <T extends Block> Identified<T> register(@NotNull Identifier identifier,
                                                            @NotNull T block) {
-        block = Registry.register(Registries.BLOCK, identifier, block);
+        block = Registry.register(BuiltInRegistries.BLOCK, identifier, block);
         return new Identified<>(identifier, block);
     }
 
@@ -71,7 +71,7 @@ public final class BlockUtils {
      * @param identifier block identifier
      * @return block registry key
      */
-    public static RegistryKey<Block> keyOf(Identifier identifier) {
-        return RegistryKey.of(RegistryKeys.BLOCK, identifier);
+    public static ResourceKey<Block> keyOf(Identifier identifier) {
+        return ResourceKey.create(Registries.BLOCK, identifier);
     }
 }

@@ -3,16 +3,16 @@ package com.github.sib_energy_craft.sec_utils.utils;
 import com.github.sib_energy_craft.sec_utils.common.Identified;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Identifier;
+import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
@@ -25,7 +25,7 @@ import java.util.function.Function;
 public final class ItemUtils {
 
     /**
-     * Build and register item in {@link Registries#ITEM}
+     * Build and register item in {@link BuiltInRegistries#ITEM}
      *
      * @param itemGroup   item group registry key
      * @param block       identified block
@@ -34,7 +34,7 @@ public final class ItemUtils {
      * @param <R>         block item type
      * @return registered item
      */
-    public static <B extends Block, R extends BlockItem> R register(@NotNull RegistryKey<ItemGroup> itemGroup,
+    public static <B extends Block, R extends BlockItem> R register(@NotNull ResourceKey<CreativeModeTab> itemGroup,
                                                                     @NotNull Identified<? extends B> block,
                                                                     @NotNull Function<B, R> itemCreator) {
         var entity = block.entity();
@@ -44,7 +44,7 @@ public final class ItemUtils {
     }
 
     /**
-     * Register item in {@link Registries#ITEM}
+     * Register item in {@link BuiltInRegistries#ITEM}
      *
      * @param itemGroup  item group registry key
      * @param identifier item identifier
@@ -52,43 +52,43 @@ public final class ItemUtils {
      * @param <T>        item type
      * @return registered item
      */
-    public static <T extends Item> T register(@NotNull RegistryKey<ItemGroup> itemGroup,
+    public static <T extends Item> T register(@NotNull ResourceKey<CreativeModeTab> itemGroup,
                                               @NotNull Identifier identifier,
                                               @NotNull T item) {
-        ItemGroupEvents.modifyEntriesEvent(itemGroup).register(entries -> entries.add(item));
-        return Registry.register(Registries.ITEM, identifier, item);
+        CreativeModeTabEvents.modifyOutputEvent(itemGroup).register(entries -> entries.accept(item));
+        return Registry.register(BuiltInRegistries.ITEM, identifier, item);
     }
 
     /**
-     * Create and register item in {@link Registries#ITEM}
+     * Create and register item in {@link BuiltInRegistries#ITEM}
      *
      * @param itemGroup  item group registry key
      * @param identifier item identifier
      * @param settings   item settings
      * @return registered item
      */
-    public static Item register(@NotNull RegistryKey<ItemGroup> itemGroup,
+    public static Item register(@NotNull ResourceKey<CreativeModeTab> itemGroup,
                                 @NotNull Identifier identifier,
-                                @NotNull Item.Settings settings) {
-        settings.registryKey(keyOf(identifier));
+                                @NotNull Item.Properties settings) {
+        settings.setId(keyOf(identifier));
         var item = new Item(settings);
         return register(itemGroup, identifier, item);
     }
 
     /**
-     * Register block item in {@link Registries#ITEM}
+     * Register block item in {@link BuiltInRegistries#ITEM}
      *
      * @param itemGroup item group registry key
      * @param block     identified and registered block
      * @return registered item
      */
-    public static BlockItem registerBlockItem(@NotNull RegistryKey<ItemGroup> itemGroup,
+    public static BlockItem registerBlockItem(@NotNull ResourceKey<CreativeModeTab> itemGroup,
                                               @NotNull Identified<? extends Block> block) {
         var entity = block.entity();
         var identifier = block.identifier();
-        var settings = new Item.Settings()
-                .registryKey(keyOf(identifier))
-                .useBlockPrefixedTranslationKey();
+        var settings = new Item.Properties()
+                .setId(keyOf(identifier))
+                .useBlockDescriptionPrefix();
         var item = new BlockItem(entity, settings);
         return register(itemGroup, identifier, item);
     }
@@ -99,7 +99,7 @@ public final class ItemUtils {
      * @param identifier item identifier
      * @return item registry key
      */
-    public static RegistryKey<Item> keyOf(Identifier identifier) {
-        return RegistryKey.of(RegistryKeys.ITEM, identifier);
+    public static ResourceKey<Item> keyOf(Identifier identifier) {
+        return ResourceKey.create(Registries.ITEM, identifier);
     }
 }

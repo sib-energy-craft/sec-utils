@@ -17,14 +17,14 @@ dependencies {
     annotationProcessor(libs.lombok)
 
     minecraft(libs.minecraft)
-    mappings(variantOf(libs.fabric.yarn) { classifier("v2") })
-    modImplementation(libs.fabric.loader)
+    implementation(libs.fabric.loader)
 
-    modImplementation(libs.fabric.api)
+    implementation(libs.fabric.api)
 
     testImplementation(libs.bundles.testing)
 
     testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(libs.junit.platform.launcher)
 }
 val minecraftVersion = libs.versions.minecraft.get()
 

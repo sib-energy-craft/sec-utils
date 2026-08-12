@@ -1,6 +1,6 @@
 package com.github.sib_energy_craft.sec_utils.common;
 
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 /**

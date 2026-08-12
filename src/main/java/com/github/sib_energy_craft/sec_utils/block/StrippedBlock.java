@@ -1,6 +1,6 @@
 package com.github.sib_energy_craft.sec_utils.block;
 
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 /**

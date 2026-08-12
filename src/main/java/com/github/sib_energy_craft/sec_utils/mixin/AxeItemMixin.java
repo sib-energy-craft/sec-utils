@@ -4,9 +4,9 @@ import com.github.sib_energy_craft.sec_utils.Hooks;
 import com.github.sib_energy_craft.sec_utils.block.StrippedBlock;
 import com.google.common.collect.ImmutableMap;
 import lombok.extern.slf4j.Slf4j;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.AxeItem;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -31,19 +31,19 @@ public class AxeItemMixin {
      * Stripped block static final field into {@link AxeItem}.<br/>
      */
     @Mutable
-    @Shadow @Final protected static Map<Block, Block> STRIPPED_BLOCKS;
+    @Shadow @Final protected static Map<Block, Block> STRIPPABLES;
 
     static {
-        Hooks.AxeItemClassInit = value -> AxeItemMixin.STRIPPED_BLOCKS = new ImmutableMap.Builder<Block, Block>()
-                        .putAll(STRIPPED_BLOCKS)
+        Hooks.AxeItemClassInit = value -> AxeItemMixin.STRIPPABLES = new ImmutableMap.Builder<Block, Block>()
+                        .putAll(STRIPPABLES)
                         .putAll(value)
                         .build();
     }
 
-    @Inject(method = "getStrippedState", at = @At("HEAD"), cancellable = true)
-    private void getStrippedState(BlockState state,
-                                  CallbackInfoReturnable<Optional<BlockState>> callbackInfoReturnable) {
-        var strippedBlock = STRIPPED_BLOCKS.get(state.getBlock());
+    @Inject(method = "getStripped", at = @At("HEAD"), cancellable = true)
+    private void getStripped(BlockState state,
+                             CallbackInfoReturnable<Optional<BlockState>> callbackInfoReturnable) {
+        var strippedBlock = STRIPPABLES.get(state.getBlock());
         if(strippedBlock instanceof StrippedBlock block) {
             var strippedState = block.getStrippedState(state);
             callbackInfoReturnable.setReturnValue(Optional.of(strippedState));

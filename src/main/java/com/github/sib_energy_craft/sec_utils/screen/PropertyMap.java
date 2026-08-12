@@ -1,17 +1,17 @@
 package com.github.sib_energy_craft.sec_utils.screen;
 
-import net.minecraft.screen.PropertyDelegate;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import net.minecraft.world.inventory.ContainerData;
 
 /**
  * @since 0.0.1
  * @author sibmaks
  */
-public class PropertyMap<K extends Enum<K>> implements PropertyDelegate {
+public class PropertyMap<K extends Enum<K>> implements ContainerData {
     private final K[] enumConstants;
     private final EnumMap<K, Supplier<Integer>> supplierMap;
     private final EnumMap<K, Consumer<Integer>> consumerMap;
@@ -61,7 +61,7 @@ public class PropertyMap<K extends Enum<K>> implements PropertyDelegate {
     }
 
     @Override
-    public int size() {
+    public int getCount() {
         return consumerMap.size();
     }
 }

@@ -4,13 +4,13 @@ import com.github.sib_energy_craft.sec_utils.common.Identified;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 public final class EntityUtils {
 
     /**
-     * Register block entity in {@link Registries#BLOCK_ENTITY_TYPE}
+     * Register block entity in {@link BuiltInRegistries#BLOCK_ENTITY_TYPE}
      *
      * @param block   identified and registered block
      * @param factory entity factory
@@ -37,7 +37,7 @@ public final class EntityUtils {
     }
 
     /**
-     * Register block entity in {@link Registries#BLOCK_ENTITY_TYPE}
+     * Register block entity in {@link BuiltInRegistries#BLOCK_ENTITY_TYPE}
      *
      * @param block   identified block
      * @param factory entity factory
@@ -55,7 +55,7 @@ public final class EntityUtils {
                 .create(factory, entity)
                 .build();
 
-        return Registry.register(Registries.BLOCK_ENTITY_TYPE, identifier, energySupplierEntityType);
+        return Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, identifier, energySupplierEntityType);
     }
 
     /**

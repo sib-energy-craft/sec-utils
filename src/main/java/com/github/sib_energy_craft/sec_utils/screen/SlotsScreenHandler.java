@@ -2,9 +2,9 @@ package com.github.sib_energy_craft.sec_utils.screen;
 
 import com.github.sib_energy_craft.sec_utils.screen.slot.SlotGroupsMeta;
 import com.github.sib_energy_craft.sec_utils.screen.slot.SlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -12,9 +12,9 @@ import org.jetbrains.annotations.Nullable;
  * @author sibmaks
  * @since 0.0.14
  */
-public abstract class SlotsScreenHandler extends ScreenHandler {
+public abstract class SlotsScreenHandler extends AbstractContainerMenu {
 
-    protected SlotsScreenHandler(@Nullable ScreenHandlerType<?> type,
+    protected SlotsScreenHandler(@Nullable MenuType<?> type,
                                  int syncId) {
         super(type, syncId);
     }
@@ -59,6 +59,6 @@ public abstract class SlotsScreenHandler extends ScreenHandler {
             return false;
         }
         var globalRange = slotGroupMeta.getGlobalRange();
-        return insertItem(slotStack, globalRange.minIndex(), globalRange.maxIndex() + 1, false);
+        return moveItemStackTo(slotStack, globalRange.minIndex(), globalRange.maxIndex() + 1, false);
     }
 }

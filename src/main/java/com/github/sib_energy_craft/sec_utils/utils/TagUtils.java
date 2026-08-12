@@ -2,11 +2,11 @@ package com.github.sib_energy_craft.sec_utils.utils;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -25,7 +25,7 @@ public final class TagUtils {
      */
     public static boolean hasTag(@NotNull TagKey<Item> tag,
                                  @NotNull ItemStack itemStack) {
-        return itemStack.streamTags().anyMatch((it) -> it.equals(tag));
+        return itemStack.typeHolder().is(tag);
     }
 
     /**
@@ -37,6 +37,6 @@ public final class TagUtils {
      */
     public static boolean hasTag(@NotNull TagKey<Block> tag,
                                  @NotNull BlockState blockState) {
-        return blockState.streamTags().anyMatch((it) -> it.equals(tag));
+        return blockState.typeHolder().is(tag);
     }
 }

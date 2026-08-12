@@ -2,13 +2,13 @@ package com.github.sib_energy_craft.sec_utils.utils;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.stat.StatFormatter;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.stats.StatFormatter;
 import org.jetbrains.annotations.NotNull;
 
-import static net.minecraft.stat.Stats.CUSTOM;
+import static net.minecraft.stats.Stats.CUSTOM;
 
 /**
  * @author sibmaks
@@ -25,9 +25,9 @@ public final class StatUtils {
      * @return stat registered identifier
      */
     public static Identifier register(@NotNull String id, @NotNull StatFormatter formatter) {
-        var identifier = Identifier.of(id);
-        Registry.register(Registries.CUSTOM_STAT, id, identifier);
-        CUSTOM.getOrCreateStat(identifier, formatter);
+        var identifier = Identifier.parse(id);
+        Registry.register(BuiltInRegistries.CUSTOM_STAT, id, identifier);
+        CUSTOM.get(identifier, formatter);
         return identifier;
     }
 
