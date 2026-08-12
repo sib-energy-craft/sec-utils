@@ -27,6 +27,18 @@ dependencies {
     testRuntimeOnly(libs.junit.jupiter.engine)
     testRuntimeOnly(libs.junit.platform.launcher)
 }
+
+loom {
+    splitEnvironmentSourceSets()
+
+    mods {
+        register("sec-utils") {
+            sourceSet(sourceSets["main"])
+            sourceSet(sourceSets["client"])
+        }
+    }
+}
+
 val minecraftVersion = libs.versions.minecraft.get()
 
 version = System.getenv("VERSION")  ?: "unspecified"

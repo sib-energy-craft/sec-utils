@@ -3,9 +3,6 @@ package com.github.sib_energy_craft.sec_utils.utils;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import net.fabricmc.fabric.api.menu.v1.ExtendedMenuType;
-import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.inventory.MenuAccess;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -40,18 +37,4 @@ public final class ScreenUtils {
         return Registry.register(BuiltInRegistries.MENU, identifier, type);
     }
 
-    /**
-     * Register screen handler in {@link BuiltInRegistries#MENU}
-     *
-     * @param screenHandlerType screen handler type
-     * @param provider          handled screen provider
-     * @param <T>               type of screen handler
-     * @param <S>               type of screen and provided screen
-     * @since 0.0.16
-     */
-    public static <T extends AbstractContainerMenu, S extends Screen & MenuAccess<T>> void registerScreen(
-            @NotNull MenuType<T> screenHandlerType,
-            @NotNull MenuScreens.ScreenConstructor<T, S> provider) {
-        MenuScreens.register(screenHandlerType, provider);
-    }
 }
