@@ -9,6 +9,7 @@ plugins {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -119,15 +120,6 @@ publishing {
         }
     }
     repositories {
-        maven {
-            val releasesUrl = uri("https://nexus.sibmaks.ru/repository/maven-releases/")
-            val snapshotsUrl = uri("https://nexus.sibmaks.ru/repository/maven-snapshots/")
-            url = if (version.toString().endsWith("SNAPSHOT")) snapshotsUrl else releasesUrl
-            credentials {
-                username = project.findProperty("nexus_username")?.toString() ?: System.getenv("NEXUS_USERNAME")
-                password = project.findProperty("nexus_password")?.toString() ?: System.getenv("NEXUS_PASSWORD")
-            }
-        }
         maven {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/sib-energy-craft/sec-utils")
