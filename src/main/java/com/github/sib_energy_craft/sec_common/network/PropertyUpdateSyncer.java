@@ -1,7 +1,7 @@
 package com.github.sib_energy_craft.sec_common.network;
 
-import com.github.sib_energy_craft.screen.property.StaticTypedScreenProperty;
-import com.github.sib_energy_craft.screen.property.TypedScreenProperty;
+import com.github.sib_energy_craft.sec_common.screen.property.StaticTypedScreenProperty;
+import com.github.sib_energy_craft.sec_common.screen.property.TypedScreenProperty;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import lombok.AllArgsConstructor;

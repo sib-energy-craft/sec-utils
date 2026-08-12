@@ -1,8 +1,8 @@
 package com.github.sib_energy_craft.sec_common.network;
 
-import com.github.sib_energy_craft.screen.property.ScreenPropertyRegistry;
-import com.github.sib_energy_craft.screen.property.StaticTypedScreenProperty;
-import com.github.sib_energy_craft.screen.property.TypedScreenProperty;
+import com.github.sib_energy_craft.sec_common.screen.property.ScreenPropertyRegistry;
+import com.github.sib_energy_craft.sec_common.screen.property.StaticTypedScreenProperty;
+import com.github.sib_energy_craft.sec_common.screen.property.TypedScreenProperty;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import org.jspecify.annotations.NonNull;

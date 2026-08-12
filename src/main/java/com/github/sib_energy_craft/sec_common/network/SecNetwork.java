@@ -1,6 +1,6 @@
 package com.github.sib_energy_craft.sec_common.network;
 
-import com.github.sib_energy_craft.sec_utils.load.DefaultModInitializer;
+import com.github.sib_energy_craft.sec_common.load.DefaultModInitializer;
 import lombok.extern.slf4j.Slf4j;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 
