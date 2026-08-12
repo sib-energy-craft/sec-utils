@@ -15,6 +15,6 @@
     "minecraft": "${minecraft_version}"
   },
   "mixins": [
-    "sec.utils.mixins.json"
+    "sec.common.mixins.json"
   ]
 }
